@@ -25,4 +25,14 @@ public class Solution {
             System.out.println(element);
         }
     }
+
+    public static class SpecialThread implements Runnable {
+        @Override
+        public void run() {
+            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+                System.out.println(ste);
+            }
+        }
+    }
 }
+

@@ -3,7 +3,8 @@ package task1626;
 /* 
 Создание по образцу
 Разберись, как работает программа.
-По образу и подобию CountdownRunnable создай нить CountUpRunnable, которая выводит значения в нормальном порядке - от 1 до number.
+По образу и подобию CountdownRunnable создай нить CountUpRunnable,
+ которая выводит значения в нормальном порядке - от 1 до number.
 
 
 Requirements:
@@ -21,8 +22,25 @@ public class Solution {
         new Thread(new CountUpRunnable(), "Увеличиваем").start();
     }
 
-    public static class CountUpRunnable {
+    public static class CountUpRunnable implements Runnable{
         //Add your code here - добавь код тут
+        private int countIndexUp = 1;
+
+        public void run() {
+            try {
+                while (true) {
+                    System.out.println(toString());
+                    countIndexUp += 1;
+                    if (countIndexUp > Solution.number) return;
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+            }
+        }
+
+        public String toString() {
+            return Thread.currentThread().getName() + ": " + countIndexUp;
+        }
     }
 
 

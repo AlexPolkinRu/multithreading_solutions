@@ -2,12 +2,15 @@ package task1714;
 
 /* 
 Comparable
-Реализуй интерфейс Comparable<Beach> в классе Beach. Пляжи(Beach) будут использоваться нитями, поэтому позаботься, чтобы все методы были синхронизированы.
+Реализуй интерфейс Comparable<Beach> в классе Beach.
+ Пляжи(Beach) будут использоваться нитями, поэтому позаботься, чтобы все методы были синхронизированы.
 Реализуй метод compareTo так, чтобы при сравнении двух пляжей он выдавал:
 – положительное число, если первый пляж лучше;
 – отрицательное число, если второй пляж лучше;
 – ноль, если пляжи одинаковые.
-Сравни каждый критерий по отдельности, чтобы победителем был пляж с лучшими показателями по большинству критериев. Учти при сравнении, чем меньше расстояние к пляжу (distance), тем пляж лучше.
+Сравни каждый критерий по отдельности,
+ чтобы победителем был пляж с лучшими показателями по большинству критериев.
+  Учти при сравнении, чем меньше расстояние к пляжу (distance), тем пляж лучше.
 
 
 Requirements:
@@ -17,7 +20,7 @@ Requirements:
 4. Все методы класса Beach, кроме метода main, должны быть синхронизированы.
 */
 
-public class Beach {
+public class Beach implements Comparable<Beach> {
     private String name;      //название
     private float distance;   //расстояние
     private int quality;    //качество
@@ -28,28 +31,36 @@ public class Beach {
         this.quality = quality;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 
-    public float getDistance() {
+    public synchronized float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public synchronized void setDistance(float distance) {
         this.distance = distance;
     }
 
-    public int getQuality() {
+    public synchronized int getQuality() {
         return quality;
     }
 
-    public void setQuality(int quality) {
+    public synchronized void setQuality(int quality) {
         this.quality = quality;
+    }
+
+    @Override
+    public synchronized int compareTo(Beach anotherBeach) {
+        int criteria1, criteria2;
+        criteria1 = Integer.compare(getQuality(), anotherBeach.getQuality());
+        criteria2 = Float.compare(anotherBeach.getDistance(), getDistance());
+        return criteria1 + criteria2;
     }
 
     public static void main(String[] args) {

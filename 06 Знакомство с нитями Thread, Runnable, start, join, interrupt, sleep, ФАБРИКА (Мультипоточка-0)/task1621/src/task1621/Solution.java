@@ -8,7 +8,7 @@ Thread.currentThread - всегда возвращает текущую нить
 
 Requirements:
 1. Метод printMsg должен получать текущую нить с помощью Thread.currentThread.
-2. Метод printMsg должен должен усыплять нить на 1 миллисекунду.
+2. Метод printMsg должен усыплять нить на 1 миллисекунду.
 3. Метод printMsg должен вызывать метод getName у текущей нити.
 4. Метод main должен вызвать метод printMsg у объекта типа ThreadNamePrinter 5 раз.
 5. Метод run должен вызвать метод printMsg 5 раз.
@@ -33,10 +33,15 @@ public class Solution {
         }
 
         public void printMsg() {
-            Thread t = null;//присвой переменной t текущую нить
+            Thread t = Thread.currentThread();//присвой переменной t текущую нить
             String name = t.getName();
             System.out.println("Name=" + name);
             //add sleep here - добавь sleep тут
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
