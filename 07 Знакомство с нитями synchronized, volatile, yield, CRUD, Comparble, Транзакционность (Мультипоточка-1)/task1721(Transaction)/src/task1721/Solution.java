@@ -1,8 +1,9 @@
 package task1721;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ Requirements:
 1. Класс Solution должен содержать public static поле allLines типа List<String>.
 2. Класс Solution должен содержать public static поле forRemoveLines типа List<String>.
 3. Класс Solution должен содержать public void метод joinData() который может бросать исключение CorruptedDataException.
-4. Программа должна считывать c консоли имена двух файлов.
+4. Программа должна считывать с консоли имена двух файлов.
 5. Программа должна считывать построчно данные из первого файла в список allLines.
 6. Программа должна считывать построчно данные из второго файла в список forRemoveLines.
 7. Метод joinData должен удалить в списке allLines все строки из списка forRemoveLines, если в allLines содержаться все строки из списка forRemoveLines.
@@ -32,35 +33,31 @@ Requirements:
 */
 
 public class Solution {
-    public static final List<String> allLines = new ArrayList<String>();
-    public static final List<String> forRemoveLines = new ArrayList<String>();
+    public static List<String> allLines = new ArrayList<String>();
+    public static List<String> forRemoveLines = new ArrayList<String>();
 
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String fileName1 = null;
-        String fileName2 = null;
+        String fileName1;
+        String fileName2;
         try {
             fileName1 = reader.readLine();
             fileName2 = reader.readLine();
             reader.close();
-            BufferedReader fReader1 = new BufferedReader(new FileReader(fileName1));
-            String input;
-            while ((input = fReader1.readLine()) != null) {
-                allLines.add(input);
-            }
-            fReader1.close();
-            BufferedReader fReader2 = new BufferedReader(new FileReader(fileName2));
-            while ((input = fReader2.readLine()) != null)
-                forRemoveLines.add(input);
-            fReader2.close();
+
+            allLines = Files.readAllLines(Paths.get(fileName1));
+            forRemoveLines = Files.readAllLines(Paths.get(fileName2));
+
             new Solution().joinData();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void joinData() throws CorruptedDataException {
-        if (allLines.containsAll(forRemoveLines))
+        if (allLines.containsAll(forRemoveLines)) {
             allLines.removeAll(forRemoveLines);
+        }
         else {
             allLines.clear();
             throw new CorruptedDataException();

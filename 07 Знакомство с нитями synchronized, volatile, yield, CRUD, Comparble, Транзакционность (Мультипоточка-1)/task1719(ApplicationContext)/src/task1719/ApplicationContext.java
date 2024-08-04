@@ -9,7 +9,6 @@ ApplicationContext будет доступен множеству нитей.
 Сделать так, чтобы данные не терялись:
 подумай, какое ключевое слово необходимо поставить и где.
 
-
 Requirements:
 1. Класс ApplicationContext должен быть абстрактным.
 2. Класс ApplicationContext должен содержать private поле container типа Map<String, GenericsBean>.
@@ -20,7 +19,6 @@ Requirements:
 public abstract class ApplicationContext<GenericsBean extends Bean> {
     private Map<String, GenericsBean> container = new HashMap<>();
     //Map<Name, some class implemented Bean interface>
-
 
     protected ApplicationContext() {
         parseAllClassesAndInterfaces();
